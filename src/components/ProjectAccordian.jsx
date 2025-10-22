@@ -15,6 +15,7 @@ function ProjectAccordian({projectData, activeKey, onSelect}) {
           {projectData.description}
           <div className="row mt-4">
                 <div className="col-md-12">
+                  <h2>Tasks</h2>
                   { (projectData.tasks || []).map(task => {
                     return (
                       <TaskAccordian key={task.id} taskData={task} />
