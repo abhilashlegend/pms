@@ -1,0 +1,84 @@
+{
+  "projects": [
+    {
+      "id": "p1",
+      "title": "Website Redesign",
+      "description": "Complete overhaul of the company website with modern design and improved user experience",
+      "dueDate": "2025-12-31",
+      "tasks": [
+        {
+          "id": "t1-1",
+          "title": "Design Homepage Mockup",
+          "description": "Create wireframes and visual design for the main landing page",
+          "dueDate": "2025-11-01",
+          "status": "in-progress"
+        },
+        {
+          "id": "t1-2",
+          "title": "Implement Responsive Layout",
+          "description": "Ensure website works perfectly on all devices and screen sizes",
+          "dueDate": "2025-11-15",
+          "status": "not-started"
+        },
+        {
+          "id": "t1-3",
+          "title": "Content Migration",
+          "description": "Transfer existing content to new design structure",
+          "dueDate": "2025-12-15",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "title": "Mobile App Development",
+      "description": "Create a cross-platform mobile application for project management",
+      "dueDate": "2026-02-28",
+      "tasks": [
+        {
+          "id": "t2-1",
+          "title": "User Authentication",
+          "description": "Implement secure login and registration system",
+          "dueDate": "2025-12-01",
+          "status": "not-started"
+        },
+        {
+          "id": "t2-2",
+          "title": "Project Dashboard",
+          "description": "Develop main dashboard with project overview and statistics",
+          "dueDate": "2025-12-31",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "title": "Marketing Campaign",
+      "description": "Q4 Digital marketing campaign for product launch",
+      "dueDate": "2025-12-15",
+      "tasks": [
+        {
+          "id": "t3-1",
+          "title": "Social Media Strategy",
+          "description": "Plan content calendar and engagement strategies",
+          "dueDate": "2025-11-01",
+          "status": "completed"
+        },
+        {
+          "id": "t3-2",
+          "title": "Email Newsletter",
+          "description": "Design and write content for promotional emails",
+          "dueDate": "2025-11-15",
+          "status": "in-progress"
+        },
+        {
+          "id": "t3-3",
+          "title": "Analytics Setup",
+          "description": "Configure tracking and reporting dashboards",
+          "dueDate": "2025-11-30",
+          "status": "not-started"
+        }
+      ]
+    }
+  ]
+}
