@@ -1,7 +1,7 @@
 import Accordion from 'react-bootstrap/Accordion';
 import TaskAccordian from './TaskAccordian';
 
-function ProjectAccordian({projectData, activeKey, onSelect}) {
+function ProjectAccordian({projectData, activeKey, onSelect, onDelete}) {
 
   return (
     <Accordion activeKey={activeKey} onSelect={onSelect}>
@@ -11,7 +11,10 @@ function ProjectAccordian({projectData, activeKey, onSelect}) {
            <span>{projectData.title}</span>
         </Accordion.Header>
         <Accordion.Body>
-          <div><strong>Due Date: { projectData.dueDate }</strong></div>
+          <div className='d-flex justify-content-between align-items-center mb-3'>
+            <strong>Due Date: { projectData.dueDate }</strong>
+            <button className='btn btn-danger' onClick={() => onDelete(projectData.id)}>Delete</button>
+          </div>
           {projectData.description}
           <div className="row mt-4">
                 <div className="col-md-12">

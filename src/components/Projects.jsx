@@ -34,6 +34,16 @@ export default function Projects() {
 
     }
 
+    function deleteProject(projectId) {
+        setProjectsData((prevData) => {
+            const updatedProjects = {
+                ...prevData,
+                projects: prevData.projects.filter(project => project.id !== projectId)
+            };
+            return updatedProjects;
+        });
+    }
+
     return (
         <div className="container-fluid">
             <AddProjectModal saveProject={addNewProject} showNewProjectModal={showNewProject} handleCloseAddProjectModal={handleCloseProject} />
@@ -65,6 +75,7 @@ export default function Projects() {
                     <div key={project.id} className="row mt-4">
                         <div className="col-md-12">
                              <ProjectAccordian 
+                                 onDelete={deleteProject}
                                  projectData={project}
                                  activeKey={activeProject}
                                  onSelect={(key) => setActiveProject(key)}
