@@ -2,11 +2,17 @@ import { useState } from 'react';
 import AddProjectModal from "./AddProjectModal";
 import ProjectAccordian from "./ProjectAccordian";
 import PROJECTDATA from '../data/dummy-projects.json';
+import AddTaskModal from './AddTaskModal';
 
 export default function Projects() {
     const [showNewProject, setShowNewProject] = useState(false);
     const [projectsData, setProjectsData] = useState(PROJECTDATA);
     const [activeProject, setActiveProject] = useState(null);
+
+      const [showNewTask, setShowNewTask] = useState(false);
+    
+      const handleCloseAddTaskModal = () => setShowNewTask(false);
+      const handleOpenAddTaskModal = () => setShowNewTask(true);
 
     // Set first project as active when data loads
     useState(() => {
@@ -44,9 +50,25 @@ export default function Projects() {
         });
     }
 
+    function saveTaskToProject(projectId, task) {
+        setProjectsData((prevData) => {
+            const updatedProjects = prevData.projects.map(project => {
+                if (project.id === projectId) {
+                    return {
+                        ...project,
+                        tasks: [...(project.tasks || []), task]
+                    };
+                }
+                return project;
+            });
+            return { projects: updatedProjects };
+        });
+    }
+
     return (
         <div className="container-fluid">
             <AddProjectModal saveProject={addNewProject} showNewProjectModal={showNewProject} handleCloseAddProjectModal={handleCloseProject} />
+            <AddTaskModal  saveTask={saveTaskToProject} showNewTaskModal={showNewTask} closeAddTaskModal={handleCloseAddTaskModal} />
             <div className="row">
                 <div className="col-md-4">
                      <h1 className="text-center text-2xl font-bold">Projects</h1>
@@ -79,6 +101,7 @@ export default function Projects() {
                                  projectData={project}
                                  activeKey={activeProject}
                                  onSelect={(key) => setActiveProject(key)}
+                                 openTaskModal={handleOpenAddTaskModal}
                              />
                         </div>
                     </div>
