@@ -1,10 +1,10 @@
 import Accordion from 'react-bootstrap/Accordion';
 import TaskAccordian from './TaskAccordian';
-import { useState } from 'react';
+import { useRef } from 'react';
 
 function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal}) {
 
-
+const projectId = useRef(projectData.id);
 
   return (
     <Accordion activeKey={activeKey} onSelect={onSelect}>
@@ -23,7 +23,7 @@ function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskM
                 <div className="col-md-12">
                   <div className='d-flex justify-content-between align-items-center'>
                     <h2>Tasks</h2>
-                    <button className='btn btn-success mb-3' onClick={openTaskModal}>Add Task</button>
+                    <button className='btn btn-success mb-3' onClick={() => openTaskModal(projectData.id)}>Add Task</button>
                   </div>
                   
                   { (projectData.tasks || []).map(task => {

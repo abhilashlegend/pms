@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
 
-export default function AddTaskModal({showNewTaskModal, closeAddTaskModal, saveTask}) {
+export default function AddTaskModal({showNewTaskModal, closeAddTaskModal, saveTask, projectId}) {
 
     const [validated, setValidated] = useState(false);
 
@@ -33,9 +33,17 @@ export default function AddTaskModal({showNewTaskModal, closeAddTaskModal, saveT
             return;
         }
 
-        // Save project and close modal when validation passes
-        saveTask(projectId, task);
-        handleCloseAddTaskModal();
+        // Create task object with project ID
+        const newTask = {
+            ...task,
+            id: `t${Date.now()}`, // Generate unique task ID
+            projectId: projectId  // Add the project ID
+        };
+
+
+        // Save task and close modal when validation passes
+        saveTask(newTask);
+        closeAddTaskModal();
         
         // Reset form
         setTask({
@@ -108,10 +116,18 @@ export default function AddTaskModal({showNewTaskModal, closeAddTaskModal, saveT
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="taskForm.TaskStatus">
                     <Form.Label>Task Status</Form.Label>
-                     <Form.Select aria-label="Default select example">
-                        <option value='not-started'>not-started</option>
-                        <option value="in-progress">in-progress</option>
-                        <option value="completed">completed</option>
+                     <Form.Select 
+                        aria-label="Task status"
+                        name="status"
+                        value={task.status}
+                        onChange={(e) => handleInputChange(e)}
+                        required
+                        isInvalid={validated && !task.status}
+                     >
+                        <option value="">Select Status</option>
+                        <option value="not-started">Not Started</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
                         Please provide a task status.

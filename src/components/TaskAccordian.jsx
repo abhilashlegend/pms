@@ -2,7 +2,7 @@ import Accordion from 'react-bootstrap/Accordion';
 
 function TaskAccordian({taskData}) {
     return (
-         <Accordion defaultActiveKey={taskData.id}>
+         <Accordion className='mb-3' defaultActiveKey={taskData.id}>
             <Accordion.Item eventKey={taskData.id}>
                 <Accordion.Header>
                 <span className='me-3'>#{taskData.id} </span> 

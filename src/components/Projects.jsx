@@ -12,7 +12,10 @@ export default function Projects() {
       const [showNewTask, setShowNewTask] = useState(false);
     
       const handleCloseAddTaskModal = () => setShowNewTask(false);
-      const handleOpenAddTaskModal = () => setShowNewTask(true);
+      const handleOpenAddTaskModal = (projectId) => {
+        setShowNewTask(true);
+        setActiveProject(projectId);
+      } 
 
     // Set first project as active when data loads
     useState(() => {
@@ -50,25 +53,34 @@ export default function Projects() {
         });
     }
 
-    function saveTaskToProject(projectId, task) {
+    function saveTaskToProject(newTask) {
         setProjectsData((prevData) => {
-            const updatedProjects = prevData.projects.map(project => {
-                if (project.id === projectId) {
-                    return {
-                        ...project,
-                        tasks: [...(project.tasks || []), task]
-                    };
-                }
-                return project;
-            });
-            return { projects: updatedProjects };
+            const updatedProjects = {
+                ...prevData,
+                projects: prevData.projects.map(project => {
+                    if (project.id === newTask.projectId) {
+                        return {
+                            ...project,
+                            tasks: [...(project.tasks || []), {
+                                id: newTask.id,
+                                title: newTask.title,
+                                description: newTask.description,
+                                dueDate: newTask.dueDate,
+                                status: newTask.status
+                            }]
+                        };
+                    }
+                    return project;
+                })
+            };
+            return updatedProjects; // Add this return statement
         });
     }
 
     return (
         <div className="container-fluid">
             <AddProjectModal saveProject={addNewProject} showNewProjectModal={showNewProject} handleCloseAddProjectModal={handleCloseProject} />
-            <AddTaskModal  saveTask={saveTaskToProject} showNewTaskModal={showNewTask} closeAddTaskModal={handleCloseAddTaskModal} />
+            <AddTaskModal  saveTask={saveTaskToProject} showNewTaskModal={showNewTask} projectId={activeProject} closeAddTaskModal={handleCloseAddTaskModal} />
             <div className="row">
                 <div className="col-md-4">
                      <h1 className="text-center text-2xl font-bold">Projects</h1>
