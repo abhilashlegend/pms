@@ -4,21 +4,57 @@ import ProjectAccordian from "./ProjectAccordian";
 import PROJECTDATA from '../data/dummy-projects.json';
 import AddTaskModal from './AddTaskModal';
 import EditProjectModal from './EditProjectModal';
+import EditTaskModal from './EditTaskModal';
 
 export default function Projects() {
     const [showNewProject, setShowNewProject] = useState(false);
     const [projectsData, setProjectsData] = useState(PROJECTDATA);
     const [activeProject, setActiveProject] = useState(null);
 
-      const [showNewTask, setShowNewTask] = useState(false);
-      const [showEditProject, setShowEditProject] = useState(false);
-      const [project, setProject] = useState({});
-    
-      const handleCloseAddTaskModal = () => setShowNewTask(false);
-      const handleOpenAddTaskModal = (projectId) => {
+    const [showNewTask, setShowNewTask] = useState(false);
+    const [showEditProject, setShowEditProject] = useState(false);
+    const [project, setProject] = useState({});
+
+    // Edit Task Modal State
+    const [showEditTask, setShowEditTask] = useState(false);
+    const [editTaskData, setEditTaskData] = useState(null);
+
+    const handleCloseAddTaskModal = () => setShowNewTask(false);
+    const handleOpenAddTaskModal = (projectId) => {
         setShowNewTask(true);
         setActiveProject(projectId);
-      } 
+    }
+
+    // Edit Task Modal Handlers
+    function handleOpenEditTaskModal(task) {
+        setEditTaskData(task);
+        setShowEditTask(true);
+    }
+    function handleCloseEditTaskModal() {
+        setShowEditTask(false);
+        setEditTaskData(null);
+    }
+
+    // Update Task in Project
+    function updateTaskHandler(projectId, taskId, updatedTask) {
+        setProjectsData((prevData) => {
+            const updatedProjects = {
+                ...prevData,
+                projects: prevData.projects.map(project => {
+                    if (project.id === projectId) {
+                        return {
+                            ...project,
+                            tasks: (project.tasks || []).map(task =>
+                                task.id === taskId ? { ...task, ...updatedTask } : task
+                            )
+                        };
+                    }
+                    return project;
+                })
+            };
+            return updatedProjects;
+        });
+    }
 
     // Set first project as active only when component mounts
     useEffect(() => {
@@ -136,6 +172,7 @@ export default function Projects() {
             <AddProjectModal saveProject={addNewProject} showNewProjectModal={showNewProject} handleCloseAddProjectModal={handleCloseProject} />
             <EditProjectModal projectData={project} showEditProjectModal={showEditProject} closeEditProjectModal={handleCloseEditProject} updateProject={updateProjectHandler} />
             <AddTaskModal  saveTask={saveTaskToProject} showNewTaskModal={showNewTask} projectId={activeProject} closeAddTaskModal={handleCloseAddTaskModal} />
+            <EditTaskModal showEditTaskModal={showEditTask} closeEditTaskModal={handleCloseEditTaskModal} taskData={editTaskData} updateTask={updateTaskHandler} />
             <div className="row">
                 <div className="col-md-4">
                      <h1 className="text-center text-2xl font-bold">Projects</h1>
@@ -154,9 +191,6 @@ export default function Projects() {
                             </select>
                         </div>
                     </form>
-
-                    
-                    
                 </div>
             </div>
             { (projectsData?.projects || []).map((project) => {
@@ -171,12 +205,12 @@ export default function Projects() {
                                  openTaskModal={handleOpenAddTaskModal}
                                  onDeleteTask={handleDeleteTask}
                                  openEditProjectModal={() => handleOpenEditProjectModal(project)}
+                                 openEditTaskModal={handleOpenEditTaskModal}
                              />
                         </div>
                     </div>
                 )
             })}
-            
         </div>
     )
 }

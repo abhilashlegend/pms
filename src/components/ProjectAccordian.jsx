@@ -2,7 +2,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import TaskAccordian from './TaskAccordian';
 import { useRef } from 'react';
 
-function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal, onDeleteTask, openEditProjectModal}) {
+function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal, onDeleteTask, openEditProjectModal, openEditTaskModal}) {
 
   function deleteTaskhandler(taskId) {
       onDeleteTask(projectData.id, taskId);
@@ -39,7 +39,13 @@ function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskM
                   
                   { (projectData.tasks || []).map(task => {
                     return (
-                      <TaskAccordian key={task.id} taskData={task} onDelete={deleteTaskhandler} />
+                      <TaskAccordian 
+                        key={task.id} 
+                        taskData={task} 
+                        onDelete={deleteTaskhandler}
+                        openEditTaskModal={openEditTaskModal}
+                        projectId={projectData.id}
+                      />
                     )
                   })
                 }

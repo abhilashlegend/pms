@@ -1,6 +1,6 @@
 import Accordion from 'react-bootstrap/Accordion';
 
-function TaskAccordian({taskData, onDelete}) {
+function TaskAccordian({taskData, onDelete, openEditTaskModal, projectId}) {
     return (
          <Accordion className='mb-3' defaultActiveKey={taskData.id}>
             <Accordion.Item eventKey={taskData.id}>
@@ -16,7 +16,7 @@ function TaskAccordian({taskData, onDelete}) {
                 {taskData.description}
                 
                 <div className='d-flex justify-content-end'>
-                    <button className='btn btn-success'>Edit</button>
+                    <button className='btn btn-success' onClick={() => openEditTaskModal({...taskData, projectId})}>Edit</button>
                     <button onClick={() => onDelete(taskData.id)} className='btn btn-danger ms-3'>Delete</button>
                 </div>
                 </Accordion.Body>
