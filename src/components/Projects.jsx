@@ -43,6 +43,24 @@ export default function Projects() {
 
     }
 
+    function editProject(projectId, updatedInfo) {
+        setProjectsData((prevData) => {
+            const updatedProjects = {
+                ...prevData,
+                projects: prevData.projects.map(project => {
+                    if (project.id === projectId) { 
+                        return {
+                            ...project,
+                            ...updatedInfo
+                        };
+                    }
+                    return project;
+                })                    
+            };
+            return updatedProjects;
+        });
+    }
+
     function deleteProject(projectId) {
         setProjectsData((prevData) => {
             const updatedProjects = {
@@ -53,6 +71,25 @@ export default function Projects() {
         });
     }
 
+    function handleDeleteTask(projectId, taskId) {
+        
+        setProjectsData((prevData) => {
+            const updatedProjects = {
+                ...prevData,
+                projects: prevData.projects.map(project => {
+                    if (project.id === projectId) {
+                        return {
+                            ...project,
+                            tasks: (project.tasks || []).filter(task => task.id !== taskId)
+                        };
+                    }
+                    // return unchanged project for non-matching entries
+                    return project;
+                })                    
+            };
+            return updatedProjects;
+        });
+    }
     function saveTaskToProject(newTask) {
         setProjectsData((prevData) => {
             const updatedProjects = {
@@ -114,6 +151,7 @@ export default function Projects() {
                                  activeKey={activeProject}
                                  onSelect={(key) => setActiveProject(key)}
                                  openTaskModal={handleOpenAddTaskModal}
+                                 onDeleteTask={handleDeleteTask}
                              />
                         </div>
                     </div>

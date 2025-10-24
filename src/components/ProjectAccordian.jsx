@@ -2,9 +2,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import TaskAccordian from './TaskAccordian';
 import { useRef } from 'react';
 
-function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal}) {
+function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal, onDeleteTask}) {
 
-const projectId = useRef(projectData.id);
+  function deleteTaskhandler(taskId) {
+      onDeleteTask(projectData.id, taskId);
+  }
 
   return (
     <Accordion activeKey={activeKey} onSelect={onSelect}>
@@ -16,19 +18,24 @@ const projectId = useRef(projectData.id);
         <Accordion.Body>
           <div className='d-flex justify-content-between align-items-center mb-3'>
             <strong>Due Date: { projectData.dueDate }</strong>
-            <button className='btn btn-danger' onClick={() => onDelete(projectData.id)}>Delete</button>
+            <div>
+              <button className='btn btn-success me-3' onClick="">Edit</button>
+              <button className='btn btn-danger' onClick={() => onDelete(projectData.id)}>Delete</button>
+            </div>
+            
           </div>
           {projectData.description}
           <div className="row mt-4">
                 <div className="col-md-12">
+                  <hr />
                   <div className='d-flex justify-content-between align-items-center'>
                     <h2>Tasks</h2>
-                    <button className='btn btn-success mb-3' onClick={() => openTaskModal(projectData.id)}>Add Task</button>
+                    <button className='btn btn-primary mb-3' onClick={() => openTaskModal(projectData.id)}>Add Task</button>
                   </div>
                   
                   { (projectData.tasks || []).map(task => {
                     return (
-                      <TaskAccordian key={task.id} taskData={task} />
+                      <TaskAccordian key={task.id} taskData={task} onDelete={deleteTaskhandler} />
                     )
                   })
                 }
