@@ -2,10 +2,14 @@ import Accordion from 'react-bootstrap/Accordion';
 import TaskAccordian from './TaskAccordian';
 import { useRef } from 'react';
 
-function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal, onDeleteTask}) {
+function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskModal, onDeleteTask, openEditProjectModal}) {
 
   function deleteTaskhandler(taskId) {
       onDeleteTask(projectData.id, taskId);
+  }
+
+  function openEditModal() {
+      openEditProjectModal(projectData);
   }
 
   return (
@@ -19,7 +23,7 @@ function ProjectAccordian({projectData, activeKey, onSelect, onDelete, openTaskM
           <div className='d-flex justify-content-between align-items-center mb-3'>
             <strong>Due Date: { projectData.dueDate }</strong>
             <div>
-              <button className='btn btn-success me-3' onClick="">Edit</button>
+              <button className='btn btn-success me-3' onClick={openEditModal}>Edit</button>
               <button className='btn btn-danger' onClick={() => onDelete(projectData.id)}>Delete</button>
             </div>
             

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddProjectModal from "./AddProjectModal";
 import ProjectAccordian from "./ProjectAccordian";
 import PROJECTDATA from '../data/dummy-projects.json';
 import AddTaskModal from './AddTaskModal';
+import EditProjectModal from './EditProjectModal';
 
 export default function Projects() {
     const [showNewProject, setShowNewProject] = useState(false);
@@ -10,6 +11,8 @@ export default function Projects() {
     const [activeProject, setActiveProject] = useState(null);
 
       const [showNewTask, setShowNewTask] = useState(false);
+      const [showEditProject, setShowEditProject] = useState(false);
+      const [project, setProject] = useState({});
     
       const handleCloseAddTaskModal = () => setShowNewTask(false);
       const handleOpenAddTaskModal = (projectId) => {
@@ -17,15 +20,29 @@ export default function Projects() {
         setActiveProject(projectId);
       } 
 
-    // Set first project as active when data loads
-    useState(() => {
-        if (projectsData?.projects?.[0]) {
+    // Set first project as active only when component mounts
+    useEffect(() => {
+        if (projectsData?.projects?.[0] && !activeProject) {
             setActiveProject(projectsData.projects[0].id);
         }
-    }, [projectsData]);
+    }, []); // Empty dependency array means this only runs once on mount
 
     const handleCloseProject = () => setShowNewProject(false);
     const handleOpenProject = () => setShowNewProject(true);
+
+    function handleOpenEditProjectModal(project) {
+        setProject(project);
+        setShowEditProject(true);
+    }
+
+    function handleCloseEditProject() {
+        setShowEditProject(false);
+        setProject({}); // Reset project data when closing
+    }
+
+    function handleCloseEditProject() {
+        setShowEditProject(false);
+    }
 
     function addNewProject(project){
     // Ensure the incoming project has the expected shape
@@ -43,7 +60,7 @@ export default function Projects() {
 
     }
 
-    function editProject(projectId, updatedInfo) {
+    function updateProjectHandler(projectId, updatedInfo) {
         setProjectsData((prevData) => {
             const updatedProjects = {
                 ...prevData,
@@ -117,6 +134,7 @@ export default function Projects() {
     return (
         <div className="container-fluid">
             <AddProjectModal saveProject={addNewProject} showNewProjectModal={showNewProject} handleCloseAddProjectModal={handleCloseProject} />
+            <EditProjectModal projectData={project} showEditProjectModal={showEditProject} closeEditProjectModal={handleCloseEditProject} updateProject={updateProjectHandler} />
             <AddTaskModal  saveTask={saveTaskToProject} showNewTaskModal={showNewTask} projectId={activeProject} closeAddTaskModal={handleCloseAddTaskModal} />
             <div className="row">
                 <div className="col-md-4">
@@ -152,6 +170,7 @@ export default function Projects() {
                                  onSelect={(key) => setActiveProject(key)}
                                  openTaskModal={handleOpenAddTaskModal}
                                  onDeleteTask={handleDeleteTask}
+                                 openEditProjectModal={() => handleOpenEditProjectModal(project)}
                              />
                         </div>
                     </div>
