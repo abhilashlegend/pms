@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Register() {
+
+    useDocumentTitle('Register | PMS');
 
     const [formData, setFormData] = useState({
         firstName: "",

@@ -1,7 +1,11 @@
 import PageHeader from "../../components/pageheader/PageHeader";
 import Recent from "../../components/recent/Recent";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Dashboard() {
+
+    useDocumentTitle('Dashboard | PMS');
+    
     return (
         <>
             <PageHeader title="Dashboard" />

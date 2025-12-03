@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import PageHeader from "../../components/pageheader/PageHeader";
 import Table from 'react-bootstrap/Table';
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Users(){
+    useDocumentTitle('Users | PMS')
     return (
         <>
             <PageHeader title="Users" buttonLink="/new-user" />

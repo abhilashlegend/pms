@@ -2,8 +2,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import classes from './Login.module.css'
 import { Link } from 'react-router-dom';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 export default function Login() {
+
+    useDocumentTitle('Login | PMS');
+
     return (
         <div className={classes['login-block']}>
              <Form className={classes['form-signin']}>
