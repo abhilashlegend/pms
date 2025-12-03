@@ -19,8 +19,8 @@ export default function Login() {
                 
                 </div>
                 <div className="d-grid gap-2">
-                    <Button variant="primary" size="lg" type="submit">Sign in</Button>
-                    <Link className='btn btn-lg btn-secondary' to="/register">Register</Link>
+                    <Button variant="primary" size="lg" type="submit"><i className="bi bi-box-arrow-in-right"></i> Sign in</Button>
+                    <Link className='btn btn-lg btn-secondary' to="/register"><i class="bi bi-person-plus"></i> Register</Link>
                 </div>
                 
                 <p className="mt-5 mb-3 text-muted text-center">© 2026-2027</p>
