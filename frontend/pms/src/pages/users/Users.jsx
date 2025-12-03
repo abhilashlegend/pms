@@ -7,7 +7,7 @@ export default function Users(){
     useDocumentTitle('Users | PMS')
     return (
         <>
-            <PageHeader title="Users" buttonLink="/new-user" />
+            <PageHeader title="Users" buttonLink="/users/new-user" />
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">

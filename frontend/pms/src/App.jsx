@@ -5,6 +5,7 @@ import Register from './pages/register/Register'
 import Dashboard from './pages/dashboard/Dashboard'
 import Root from './pages/Root'
 import Users from './pages/users/Users'
+import NewUser from './pages/users/newuser/NewUser'
 
 function App() {
 
@@ -12,7 +13,10 @@ function App() {
     { path: '/', element: <Login /> },
     { path: '/', element: <Root />, children: [
       { path: '/dashboard', element: <Dashboard />,  },
-      { path: '/users', element: <Users />}
+      { path: 'users', children: [
+          { index: true, element: <Users /> },
+          { path: 'new-user', element: <NewUser /> }
+      ]}
     ]},
     
     { path: '/register', element: <Register />},
